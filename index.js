@@ -8,6 +8,7 @@ app.use(express.urlencoded({extended: false}))
 
 const PORT = 5001;
 
+// routes for CRUD operations on books
 app.use("/books", bookRouter);
 
 app.listen(PORT, () => {
