@@ -3,6 +3,8 @@ const randomString = require("randomstring")
 
 const bookRouter = express.Router();
 
+bookRouter.use(express.json())
+
 bookRouter.get("/", (req, res) => {
     let book_array = []
 
@@ -35,7 +37,7 @@ bookRouter.get("/test", (req, res) => {
 bookRouter.get("/:book_id", (req, res) => {
     let book_id = req.params.book_id;
     let tmp_book = {
-        "id": book_id,
+        "id": Number(book_id),
         "author": randomString.generate(10),
         "type": randomString.generate(5),
         "contact": randomString.generate(7),
@@ -47,6 +49,7 @@ bookRouter.get("/:book_id", (req, res) => {
 bookRouter.post("/", (req, res) => {
     let book = req.body;
     // implementation for saving to the database
+    console.log(book);
     res.status(201)
     res.json(book)
 })
@@ -54,7 +57,7 @@ bookRouter.post("/", (req, res) => {
 bookRouter.put("/:book_id", (req, res) => {
     let book_id = req.params.book_id;
     let body = req.body;
-    body["id"] = book_id;
+    body["id"] = Number(book_id);
     if(!Object.hasOwn(body, "author")){
         body["author"] = randomString.generate(10);
     }
@@ -67,7 +70,6 @@ bookRouter.put("/:book_id", (req, res) => {
     if(!Object.hasOwn(body, "contact")){
         body["contact"] = randomString.generate(10);
     }
-
     res.json(body)
 })
 
